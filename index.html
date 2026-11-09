@@ -6,7 +6,6 @@
 <title>issya_ka</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
   height: 100vh;
   display: flex;
@@ -17,9 +16,6 @@
   color: #fff;
   overflow: hidden;
 }
-
-
-  /* видео на весь экран */
   .video-bg {
     position: fixed;
     top: 0; left: 0;
@@ -28,8 +24,6 @@
     object-fit: cover;
     z-index: -2;
   }
-
-  /* затемнение поверх видео */
   body::before {
     content: '';
     position: fixed;
@@ -37,8 +31,6 @@
     background: rgba(0, 0, 0, .35);
     z-index: -1;
   }
-
-  /* стеклянная карточка (и главная, и боковая) */
   .card {
     width: min(420px, 92vw);
     padding: 40px 30px;
@@ -49,8 +41,6 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
-
-  /* аватар — ещё больше */
   .avatar {
     width: 170px;
     height: 170px;
@@ -59,7 +49,6 @@
     border: 3px solid rgba(255, 255, 255, .3);
     margin-bottom: 16px;
   }
-
   h1 { font-size: 24px; margin-bottom: 6px; }
 
   .views { font-size: 13px; opacity: .7; margin-bottom: 14px; }
@@ -75,8 +64,6 @@
     animation: blink 1s infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
-
-  /* иконки — чуть меньше */
   .links {
     display: flex;
     justify-content: center;
@@ -103,8 +90,6 @@
     background: rgba(255, 255, 255, .2);
     transform: scale(1.1);
   }
-
-  /* музыка */
   .music {
     margin-top: 22px;
     display: flex;
@@ -125,8 +110,6 @@
     from { transform: translateX(100%); }
     to   { transform: translateX(-100%); }
   }
-
-  /* ===== боковая карточка с языками ===== */
   .langs-card {
   position: fixed;
   right: 4vw;
@@ -136,7 +119,6 @@
   padding: 28px 24px;
   margin: 0;
 }
-
   .langs-card h2 {
     font-size: 18px;
     margin-bottom: 16px;
@@ -161,7 +143,6 @@
     background: rgba(255, 255, 255, .2);
     border-color: #fff;
   }
-  /* ===== левые карточки ===== */
 .side-card {
   position: fixed;
   left: 4vw;
@@ -173,12 +154,10 @@
   margin-bottom: 14px;
   letter-spacing: 1px;
 }
-/* первая — примерно на уровне верхней трети карточки с языками */
 .card-def {
   top: calc(50% - 140px);
   transform: translateY(-100%);
 }
-/* вторая — чуть ниже */
 .card-friends {
   top: calc(50% + 60px);
   transform: translateY(-50%);
@@ -218,10 +197,6 @@
   opacity: .85;
   line-height: 1.5;
 }
-
-
-  /* на телефоне карточки ставятся друг под другом */
-  /* на телефоне боковые карточки — под основной, листаются вместе со страницей */
 @media (max-width: 860px) {
   body {
     flex-direction: column;
@@ -231,8 +206,6 @@
     min-height: 100vh;
     padding: 20px 0;
   }
-
-  /* снимаем фиксированное позиционирование — карточки встают в общий поток */
   .side-card,
   .langs-card {
     position: static;
@@ -242,8 +215,6 @@
     top: auto;
     width: min(420px, 92vw);
   }
-
-  /* порядок на экране телефона */
   .card-def    { order: 1; }
   .card        { order: 2; }
   .langs-card  { order: 3; }
@@ -258,7 +229,6 @@
   <source src="video/video.mp4" type="video/mp4">
   <source src="video/video.webm" type="video/webm">
 </video>
-<!-- левая карточка: DEF -->
 <div class="card side-card card-def">
   <h2>DEF</h2>
   <div class="friends-list">
@@ -270,10 +240,6 @@
     </a>
   </div>
 </div>
-
-
-
-<!-- левая карточка: FRIENDS -->
 <div class="card side-card card-friends">
   <h2>FRIENDS</h2>
   <div class="friends-list">
@@ -288,13 +254,11 @@
     </a>
   </div>
 </div>
-
 <div class="card">
   <img class="avatar" src="avatar.jpg" alt="аватар">
   <h1>issya_ka</h1>
   <div class="views">👁 <span id="views">0</span> views</div>
   <div class="bio" id="bio"></div>
-
   <nav class="links">
     <a href="https://t.me/issyaka" target="_blank" title="Telegram" aria-label="Telegram">
       <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
@@ -306,15 +270,12 @@
       <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.4 5 18.4 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
     </a>
   </nav>
-
   <div class="music">
     <button id="playBtn" title="Volume">❌</button>
     <div class="marquee"><span>4:30</span></div>
   </div>
   <audio id="audio" loop src="music.mp3"></audio>
 </div>
-
-<!-- боковая карточка: вписывай свои языки -->
 <div class="card langs-card">
   <h2>LANGUAGES</h2>
   <div class="tags">
@@ -326,16 +287,12 @@
     <span class="tag">C++</span>
   </div>
 </div>
-
 <script>
 const COUNTER_KEY = 'issya-ka-site-views-v2';
 fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
   .then(r => r.json())
   .then(d => { document.getElementById('views').textContent = d.value; })
   .catch(() => { document.getElementById('views').textContent = '—'; });
-
-
-  // печатающийся текст
   const phrases = ['АХАХАХАХ ЕБАТЬ ТЫ НЕЛЮДЬ ЕБАНЫЙ', 'ПРИЕДЬ НАЙДИ МЕНЯ УЕБИЩЕЕЕ', 'АХАХАХАХААААХА'];
   let p = 0, i = 0, del = false;
   (function type() {
@@ -348,11 +305,9 @@ fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
     else { del = false; p = (p + 1) % phrases.length; }
     setTimeout(type, del ? 40 : 90);
   })();
-
-  // музыка
   const audio = document.getElementById('audio');
   const btn = document.getElementById('playBtn');
-  audio.volume = 0.2;  // громкость от 0 до 1
+  audio.volume = 0.2;
   let started = false;
   document.addEventListener('click', () => {
     if (!started) { audio.play(); started = true; btn.textContent = '🎵'; }
@@ -362,7 +317,6 @@ fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
     else { audio.pause(); btn.textContent = '❌'; }
   };
 </script>
-
 </body>
 </html>
 
