@@ -221,10 +221,35 @@
 
 
   /* на телефоне карточки ставятся друг под другом */
-  @media (max-width: 860px) {
-    body { flex-direction: column; gap: 16px; overflow-y: auto; height: auto; min-height: 100vh; padding: 20px 0; }
-    .langs-card { width: min(420px, 92vw); }
+  /* на телефоне боковые карточки — под основной, листаются вместе со страницей */
+@media (max-width: 860px) {
+  body {
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
   }
+
+  /* снимаем фиксированное позиционирование — карточки встают в общий поток */
+  .side-card,
+  .langs-card {
+    position: static;
+    transform: none;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: min(420px, 92vw);
+  }
+
+  /* порядок на экране телефона */
+  .card-def    { order: 1; }
+  .card        { order: 2; }
+  .langs-card  { order: 3; }
+  .card-friends{ order: 4; }
+}
+
 </style>
 </head>
 <body>
