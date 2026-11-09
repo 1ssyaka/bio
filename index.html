@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>issya_ka</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* главная карточка снова в центре */
+  background: #000 url('background.jpg') center/cover no-repeat fixed;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+
+  /* видео на весь экран */
+  .video-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  /* затемнение поверх видео */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .35);
+    z-index: -1;
+  }
+
+  /* стеклянная карточка (и главная, и боковая) */
+  .card {
+    width: min(420px, 92vw);
+    padding: 40px 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, .45);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* аватар — ещё больше */
+  .avatar {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, .3);
+    margin-bottom: 16px;
+  }
+
+  h1 { font-size: 24px; margin-bottom: 6px; }
+
+  .views { font-size: 13px; opacity: .7; margin-bottom: 14px; }
+
+  .bio {
+    font-size: 14px;
+    opacity: .85;
+    margin-bottom: 26px;
+    min-height: 20px;
+  }
+  .bio::after {
+    content: '|';
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* иконки — чуть меньше */
+  .links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+  }
+  .links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, .35);
+    background: rgba(255, 255, 255, .06);
+    transition: .25s;
+  }
+  .links a svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+  }
+  .links a:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, .2);
+    transform: scale(1.1);
+  }
+
+  /* музыка */
+  .music {
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+  .music button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .marquee { overflow: hidden; white-space: nowrap; width: 140px; }
+  .marquee span { display: inline-block; animation: scroll 8s linear infinite; }
+  @keyframes scroll {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(-100%); }
+  }
+
+  /* ===== боковая карточка с языками ===== */
+  .langs-card {
+  position: fixed;
+  right: 4vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(260px, 92vw);
+  padding: 28px 24px;
+  margin: 0;
+}
+
+  .langs-card h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .tag {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    background: rgba(255, 255, 255, .06);
+    font-size: 13px;
+    font-weight: 600;
+    transition: .25s;
+  }
+  .tag:hover {
+    background: rgba(255, 255, 255, .2);
+    border-color: #fff;
+  }
+  /* ===== левые карточки ===== */
+.side-card {
+  position: fixed;
+  left: 4vw;
+  width: min(260px, 92vw);
+  padding: 24px;
+}
+.side-card h2 {
+  font-size: 18px;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+}
+/* первая — примерно на уровне верхней трети карточки с языками */
+.card-def {
+  top: calc(50% - 140px);
+  transform: translateY(-100%);
+}
+/* вторая — чуть ниже */
+.card-friends {
+  top: calc(50% + 60px);
+  transform: translateY(-50%);
+}
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.friend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .06);
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: .25s;
+}
+.friend:hover {
+  background: rgba(255, 255, 255, .2);
+  border-color: #fff;
+  transform: translateX(4px);
+}
+.friend img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.def-text {
+  font-size: 13px;
+  opacity: .85;
+  line-height: 1.5;
+}
+
+
+  /* на телефоне карточки ставятся друг под другом */
+  @media (max-width: 860px) {
+    body { flex-direction: column; gap: 16px; overflow-y: auto; height: auto; min-height: 100vh; padding: 20px 0; }
+    .langs-card { width: min(420px, 92vw); }
+  }
+</style>
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+  <source src="video/video.mp4" type="video/mp4">
+  <source src="video/video.webm" type="video/webm">
+</video>
+<!-- левая карточка: DEF -->
+<div class="card side-card card-def">
+  <h2>DEF</h2>
+  <div class="friends-list">
+    <a class="friend" href="https://discord.com/users/1385937932527075378" target="_blank">
+      <img src="kto_gyl.jpg" alt=""><span>kto_gyl</span>
+    </a>
+    <a class="friend" href="https://discord.com/users/754939789370720256" target="_blank">
+      <img src="glare.jpg" alt=""><span>glare</span>
+    </a>
+  </div>
+</div>
+
+
+
+<!-- левая карточка: FRIENDS -->
+<div class="card side-card card-friends">
+  <h2>FRIENDS</h2>
+  <div class="friends-list">
+    <a class="friend" href="https://discord.com/users/1336333262267879570" target="_blank">
+      <img src="terrebis1.jpg" alt=""><span>terrebis1</span>
+    </a>
+    <a class="friend" href="https://discord.com/users/754939789370720256" target="_blank">
+      <img src="glare.jpg" alt=""><span>glare</span>
+    </a>
+    <a class="friend" href="https://discord.com/users/1385937932527075378" target="_blank">
+      <img src="kto_gyl.jpg" alt=""><span>kto_gyl</span>
+    </a>
+  </div>
+</div>
+
+<div class="card">
+  <img class="avatar" src="avatar.jpg" alt="аватар">
+  <h1>issya_ka</h1>
+  <div class="views">👁 <span id="views">0</span> views</div>
+  <div class="bio" id="bio"></div>
+
+  <nav class="links">
+    <a href="https://t.me/issyaka" target="_blank" title="Telegram" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+    </a>
+    <a href="https://discord.com/users/1262924154307608631" target="_blank" title="Discord" aria-label="Discord">
+      <svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.37-.44.86-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.07.07 0 0 0-.08-.04c-1.71.3-3.35.81-4.88 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06c0 .02.01.04.03.05a19.9 19.9 0 0 0 6 3.03.07.07 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.07.07 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.89.07.07 0 0 1-.01-.12c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01c.12.1.24.2.37.29a.07.07 0 0 1-.01.12c-.6.35-1.22.64-1.87.89a.07.07 0 0 0-.04.1c.36.7.77 1.37 1.22 2a.07.07 0 0 0 .08.03 19.8 19.8 0 0 0 6.01-3.03.07.07 0 0 0 .03-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.21 0 2.18 1.09 2.16 2.42 0 1.34-.95 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42s.95-2.42 2.15-2.42c1.22 0 2.18 1.09 2.16 2.42 0 1.34-.94 2.42-2.16 2.42z"/></svg>
+    </a>
+    <a href="https://github.com/Flowseal/zapret-discord-youtube/releases/tag/1.10.4" target="_blank" title="GitHub" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.4 5 18.4 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+    </a>
+  </nav>
+
+  <div class="music">
+    <button id="playBtn" title="Volume">❌</button>
+    <div class="marquee"><span>4:30</span></div>
+  </div>
+  <audio id="audio" loop src="music.mp3"></audio>
+</div>
+
+<!-- боковая карточка: вписывай свои языки -->
+<div class="card langs-card">
+  <h2>LANGUAGES</h2>
+  <div class="tags">
+    <span class="tag">HTML</span>
+    <span class="tag">CSS</span>
+    <span class="tag">JavaScript</span>
+    <span class="tag">Python</span>
+    <span class="tag">Java</span>
+    <span class="tag">C++</span>
+  </div>
+</div>
+
+<script>
+const COUNTER_KEY = 'issya-ka-site-views-v2';
+fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
+  .then(r => r.json())
+  .then(d => { document.getElementById('views').textContent = d.value; })
+  .catch(() => { document.getElementById('views').textContent = '—'; });
+
+
+  // печатающийся текст
+  const phrases = ['АХАХАХАХ ЕБАТЬ ТЫ НЕЛЮДЬ ЕБАНЫЙ', 'ПРИЕДЬ НАЙДИ МЕНЯ УЕБИЩЕЕЕ', 'АХАХАХАХААААХА'];
+  let p = 0, i = 0, del = false;
+  (function type() {
+    const el = document.getElementById('bio');
+    const cur = phrases[p];
+    el.textContent = cur.slice(0, i);
+    if (!del && i < cur.length) i++;
+    else if (del && i > 0) i--;
+    else if (i === cur.length) { del = true; setTimeout(type, 1500); return; }
+    else { del = false; p = (p + 1) % phrases.length; }
+    setTimeout(type, del ? 40 : 90);
+  })();
+
+  // музыка
+  const audio = document.getElementById('audio');
+  const btn = document.getElementById('playBtn');
+  audio.volume = 0.2;  // громкость от 0 до 1
+  let started = false;
+  document.addEventListener('click', () => {
+    if (!started) { audio.play(); started = true; btn.textContent = '🎵'; }
+  }, { once: true });
+  btn.onclick = () => {
+    if (audio.paused) { audio.play(); btn.textContent = '🎵'; }
+    else { audio.pause(); btn.textContent = '❌'; }
+  };
+</script>
+
+</body>
+</html>
+
