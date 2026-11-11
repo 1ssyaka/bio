@@ -274,8 +274,6 @@
   @media (prefers-reduced-motion: reduce) {
     .card { animation: none; opacity: 1; }
   }
-  
-  
 </style>
 </head>
 <body>
@@ -347,30 +345,39 @@ const COUNTER_KEY = 'issya-ka-site-views-v2';
 fetch('https://countapi.mileshilliard.com/api/v1/hit/' + COUNTER_KEY)
   .then(r => r.json())
   .then(d => { document.getElementById('views').textContent = d.value; })
-  .catch(() => { document.getElementById('views').textContent = '—'; });
-  const phrases = ['АХАХАХАХ', 'ПРИЕДЬ НАЙДИ МЕНЯ', 'АХАХАХАХААААХА'];
-  let p = 0, i = 0, del = false;
-  (function type() {
-    const el = document.getElementById('bio');
-    const cur = phrases[p];
-    el.textContent = cur.slice(0, i);
-    if (!del && i < cur.length) i++;
-    else if (del && i > 0) i--;
-    else if (i === cur.length) { del = true; setTimeout(type, 1500); return; }
-    else { del = false; p = (p + 1) % phrases.length; }
-    setTimeout(type, del ? 40 : 90);
-  })();
-  const audio = document.getElementById('audio');
-  const btn = document.getElementById('playBtn');
-  audio.volume = 0.1;
-  let started = false;
-  document.addEventListener('click', () => {
-    if (!started) { audio.play(); started = true; btn.textContent = '🎵'; }
-  }, { once: true });
-  btn.onclick = () => {
-    if (audio.paused) { audio.play(); btn.textContent = '🎵'; }
-    else { audio.pause(); btn.textContent = '❌'; }
-  };
+  .catch(err => {
+    console.warn('Счётчик просмотров недоступен:', err);
+    document.getElementById('views').textContent = '—';
+  });
+
+const phrases = ['АХАХАХАХ', 'ПРИЕДЬ НАЙДИ МЕНЯ', 'АХАХАХАХААААХА'];
+let p = 0, i = 0, del = false;
+(function type() {
+  const el = document.getElementById('bio');
+  const cur = phrases[p];
+  el.textContent = cur.slice(0, i);
+  if (!del && i < cur.length) i++;
+  else if (del && i > 0) i--;
+  else if (i === cur.length) { del = true; setTimeout(type, 1500); return; }
+  else { del = false; p = (p + 1) % phrases.length; }
+  setTimeout(type, del ? 40 : 90);
+})();
+
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playBtn');
+audio.volume = 0.1;
+let started = false;
+document.addEventListener('click', () => {
+  if (!started) {
+    audio.play().catch(() => {});
+    started = true;
+    btn.textContent = '🎵';
+  }
+}, { once: true });
+btn.onclick = () => {
+  if (audio.paused) { audio.play().catch(() => {}); btn.textContent = '🎵'; }
+  else { audio.pause(); btn.textContent = '❌'; }
+};
 </script>
 </body>
-</html>
+</html
